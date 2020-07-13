@@ -1,0 +1,64 @@
+apply plugin: 'com.android.library'
+apply from: "$project.rootDir/tools/versions_configuration.gradle"
+
+android {
+    compileSdkVersion getProject().compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion getProject().minSdkVersion
+        targetSdkVersion getProject().targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+
+        release {
+            consumerProguardFiles 'proguard-rules.pro'
+        }
+
+        pre {
+            consumerProguardFiles 'proguard-rules.pro'
+        }
+
+        atest {
+            consumerProguardFiles 'proguard-rules.pro'
+        }
+
+        debug {
+            consumerProguardFiles 'proguard-rules.pro'
+        }
+
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+}
+
+repositories {
+    //指定aar目录
+    flatDir {
+        dirs 'libs'
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+
+    implementation 'com.github.zerochl:FixedGson:2.8.0.0'
+    implementation(name: "fluttergo", ext: 'aar')
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+}
